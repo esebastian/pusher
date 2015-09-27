@@ -1,4 +1,7 @@
 require 'rack/test'
+require 'dotenv'
+
+Dotenv.load
 
 ENV['RACK_ENV'] = 'test'
 

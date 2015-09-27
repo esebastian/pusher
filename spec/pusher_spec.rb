@@ -30,6 +30,9 @@ describe 'Pusher' do
 
   context "when no token is retrieved" do
     it "doesn't push a notification" do
+      token_repository = class_double('TokenRepository').as_stubbed_const(transfer_nested_constants: true)
+      allow(token_repository).to receive(:find_token).and_return(nil)
+
       service = class_double('Houston::Client').as_stubbed_const(transfer_nested_constants: true)
       expect(service).not_to receive(:development)
 

@@ -9,7 +9,7 @@ describe 'Pusher' do
 
   it 'tries to retrieve a token' do
     token_repository = class_double('TokenRepository').as_stubbed_const(transfer_nested_constants: true)
-    expect(token_repository).to receive(:find_token_for).with(email)
+    expect(token_repository).to receive(:find_token).with(for_email: email)
 
     get "/push?user=#{email}"
   end
@@ -17,7 +17,7 @@ describe 'Pusher' do
   context "when a token is retrieved" do
     it "pushes a notification" do
       token_repository = class_double('TokenRepository').as_stubbed_const(transfer_nested_constants: true)
-      allow(token_repository).to receive(:find_token_for).and_return(:token)
+      allow(token_repository).to receive(:find_token).and_return(:token)
 
       service = class_double('Houston::Client').as_stubbed_const(transfer_nested_constants: true)
       apn = instance_double('Houston::Client')

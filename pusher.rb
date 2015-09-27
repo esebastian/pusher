@@ -8,7 +8,7 @@ get '/push' do
   text = params[:text] || 'Hello, world!'
   uri = params[:uri] || ''
 
-  token = TokenRepository.find_token_for(email)
+  token = TokenRepository.find_token for_email: email
 
   halt(400, 'Bad request') unless token
 

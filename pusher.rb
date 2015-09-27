@@ -25,4 +25,6 @@ get '/push' do
   notification.custom_data = {uri: uri}
 
   APN.push(notification)
+
+  "Sent notification to #{email}."
 end

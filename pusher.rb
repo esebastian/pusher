@@ -3,6 +3,10 @@ require 'houston'
 
 require_relative 'token_repository'
 
+use Rack::Auth::Basic, "Pusher" do |username, password|
+    username == ENV['USERNAME'] and password == ENV['PASSWORD']
+end
+
 get '/push' do
   email = params[:user]
   text = params[:text] || 'Hello, world!'
@@ -13,6 +17,9 @@ get '/push' do
   halt(400, 'Bad request') unless token
 
   APN = Houston::Client.development
+  APN.certificate = ENV['CERTIFICATE']
+  APN.passphrase = ENV['PASSPHRASE']
+
   notification = Houston::Notification.new(device: token)
   notification.alert = text
   notification.custom_data = {uri: uri}
